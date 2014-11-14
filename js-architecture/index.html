@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Scalable JavaScript Architecture</title>
+
+		<meta name="description" content="Scalable JavaScript Application Architecture">
+		<meta name="author" content="Vitaly Kondratiev">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/digital.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section data-state="digital-black">
+					<h1>Scalable JavaScript Architecture</h1>
+					<p>
+						<small>Vitaly Kondratiev<br/>
+						November 2014<br/>
+						<a href="http://twitter.com/vitkon">@vitkon</a></small>
+					</p>
+				</section>
+				<section>
+					<section data-state="digital-green" class="navigate-down">
+						<h1>New frontiers</h1>
+					    <aside class="notes">
+						How to approach a large scale js applications
+						How you know that you have a good architecture
+						How do you choose the right framework
+						The reality is that you have plenty of use cases and architecture changes accordingly.
+						Example.
+					    </aside>
+					</section>
+
+					<section>
+						<h1 class="black">Building for the Web</h1>
+						<h2>sometimes feels like...</h2>
+					</section>
+
+					<section>
+						<img src="images/unicorn1.jpg" alt="" class="pc100" />
+					    <aside class="notes">
+							You have so many great frameworks, features and open projects around, that sometimes it feels like everything can be done.
+					    </aside>
+					</section>
+
+					<section>
+						<img src="images/unicorn2.jpg" alt="" class="pc100" />
+					    <aside class="notes">
+							However, there are a few challenges on the way and sometimes it ends like this
+					    </aside>
+					</section>
+
+					<section>
+						<h2 class="black">Today's challenges</h2>
+						<h3>Browser release cycles measured in weeks</h3>
+						<img src="images/browser-release.jpg" alt="" class="pc100" />
+						<ul>
+							<li>More features introroduced every year than during the entire decade '00 — '09</li>
+							<li>Generational gap is huge</li>
+							<li>Not all features are good to use</li>
+						</ul>
+					    <aside class="notes">
+							Part of the challenge is that the web has gone into a hyperacceleration mode. Every 6 weeks browser release new versions that add something, break something, some things are good and some are pure rubbish.
+Good architecture and a good framework help you to even out the problem
+					    </aside>
+					</section>
+					<section>
+						<h2 class="black">Tomorrow's challenges</h2>
+						<h3>New platforms and form factors</h3>
+						<img src="images/devices.png" alt="" class="pc100" />
+						<aside class="notes">
+							We still have people who need to support IE8 which sucks and even MS admits that.
+							What projects have to support IE8 around here?
+							The difference you can do in IE8 and any other browser probably the most significant limitation you might have today.
+							new Angular, jQuery, CSS Animations — all IE9+
+							FE devs transformation throughout the decade.
+						</aside>
+					</section>
+					<section>
+						<h2>How did we get there?</h2>
+						<img src="images/tetris.gif" alt="" class="pc100" />
+						<aside class="notes">
+							The irony of the web is that it’s pretty poorly architected platform.
+							and we keep throwing things on top like in a bad game of tetris.
+							We keep adding new features and we forget to fill in the gaps. For example, we still don't have a good window object, we still don't have good rich text editor, etc.
+							It keeps pilling up, we somehow make it work and we survive, but it really impact how we deal with architecture. Fundamentally architecture for us is hiding away the stuff we don’t want to deal with: hiding the DOM, the imperfections of CSS, etc
+						</aside>
+					</section>
+
+				</section>
+				<section>
+					<section data-state="digital-green" class="navigate-down">
+						<h1>Architecture</h1>
+					</section>
+					<section>
+						<h2 data-fragment-index="0" class="">The secrect of building <span class="black">large</span> apps</h2>
+						<h2 data-fragment-index="1" class="fragment fadein">is never build large apps.</h2><br/>
+						<h3 data-fragment-index="2" class="fragment fadein black"><span class="green">Break</span> your app into <span class="green">small</span> pieces.<br/>Then assemble those testable, bite-sized pieces<br/>into your big application</h3>
+					</section>
+					<section>
+						<h2>What are we looking for?</h2>
+						<ul>
+							<li data-fragment-index="0" class="fragment roll-in">Loosely coupled architecture</li>
+							<li data-fragment-index="1" class="fragment roll-in">Smaller independent modules</li>
+							<li data-fragment-index="2" class="fragment roll-in">Flexibility to change</li>
+							<li data-fragment-index="3" class="fragment roll-in">Better QA processes</li>
+						</ul>
+					</section>
+					<section>
+						<h2 class="black">Modularity</h2>
+						<ul>
+							<li data-fragment-index="0" class="fragment roll-in">Essential foundational pattern</li>
+							<li data-fragment-index="1" class="fragment roll-in">Simplify maintenance</li>
+							<li data-fragment-index="2" class="fragment roll-in">Simplify testing</li>
+							<li data-fragment-index="3" class="fragment roll-in">Reduce ramp-up time for new devs</li>
+						</ul>
+						<pre data-fragment-index="4" class="fragment roll-in"><code>
+	// package/lib is a dependency we require
+	var lib = require('package/lib');
+	 
+	// some behaviour for our module
+	function foo(){
+	    lib.log('hello world!');
+	}
+	 
+	// expose foo to other modules
+	exports.foo = foo;
+						</pre></code>
+					</section>
+					<section>
+						<h2 data-fragment-index="0" class=" roll-in">AMD / CommonJS + Browserify</h2>
+						<h2 data-fragment-index="1" class="fragment roll-in">Module pattern</h2>
+						<h2 data-fragment-index="2" class="fragment roll-in">Object literal</h2>	
+					</section>
+					<section data-background="#000000">
+						<img src="images/modularity1.jpg" alt="" class="pc100" />
+					</section>
+					<section data-background="#000000">
+						<img src="images/modularity2.jpg" alt="" class="pc100" />
+					</section>
+					<section>
+						<h2>Pub / Sub with jQuery</h2>
+						<br/>
+						<pre data-fragment-index="4" class="fragment"><code>
+	/* notification module */
+
+	$(document).on('newMessage', function (event, data) {
+            displayNewMessageNotification(data);
+	});
+
+
+
+	/* mailCheck module */
+
+	$(document).trigger('newMessage', {msg: 'hello world'});
+						</pre></code>
+					</section>
+					<section data-background="#e7674e">
+						<h2 class="black">Modules</h2>
+						<img src="images/modularity3.jpg" class="fragment fade-in" alt="" class="pc100" />
+					</section>
+					<section>
+						<h2>Consider separate<br/>UI and Data components</h2><br/>
+						<h3 class="black">Only Data component communicates<br/>with the back-end</h3>
+					</section>
+					<section>
+						<h2>Testability</h2>
+						<ul>
+							<li data-fragment-index="0" class="fragment roll-in">Reduces long-term maintenance costs</li>
+							<li data-fragment-index="1" class="fragment roll-in">Helps to reinforce separation of concerns</li>
+							<li data-fragment-index="2" class="fragment roll-in">Provides a mechanism for generating code quality metrics</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Reusability</h2>
+						<h3 class="black">Less coupling === easier reuse</h3>
+						<ul>
+							<li data-fragment-index="0" class="fragment roll-in">Generic modules</li>
+							<li data-fragment-index="1" class="fragment roll-in">Mixins</li>
+							<li data-fragment-index="2" class="fragment roll-in">Templates</li>
+							<li data-fragment-index="3" class="fragment roll-in">Data models</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Consider Isomorphism</h2>
+						<ul>
+							<li>Rendr (Airbnb)</li>
+							<li>Kraken (Paypal)</li>
+							<li>Mojito (Yahoo)</li>
+							<li>Meteor</li>
+							<li>Derby</li>
+							<li>MEAN stack</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Isomorphic app prerequisites</h2>
+						<ul>
+							<li class="fragment roll-in">Same language on Client and Server (JS, Dart, ClosureScript)</li>
+							<li class="fragment roll-in">Isomorphic module loader (browserify)</li>
+							<li class="fragment roll-in">Isomorphic libraries (React.js)</li>
+							<li class="fragment roll-in">Knowledge (single repo, dependency injection)</li>
+						</ul>
+					</section>
+					<section>
+						<img src="images/all-js.jpg" alt="" class="pc100" />
+					</section>
+				</section>
+				<section>
+					<section data-state="digital-green" class="navigate-down">
+						<h1>A common framework</h1>
+					</section>
+					<section>
+						<h2>Library vs Framework</h2>
+						<br/>
+						<ul>
+							<li><strong>Library</strong>: non-prescriptive, loose patterns, anything possible<br/><br/></li>
+							<li><strong>Framework</strong>: prescriptive, strict patterns, enforces correctness through architecture</li>
+						</ul>
+
+					</section>
+
+					<section>
+						<h2>Frameworks</h2>
+						<ul>
+							<li class="fragment roll-in">Angular</li>
+							<li class="fragment roll-in">Ember</li>
+						</ul>
+						<br/><br/>
+						<h2>Libraries</h2>
+						<ul>
+							<li class="fragment roll-in">Backbone</li>
+							<li class="fragment roll-in">Knockout</li>
+							<li class="fragment roll-in">Flight</li>
+							<li class="fragment roll-in">React</li>
+							<li class="fragment roll-in">Polymer</li>
+						</ul>
+
+					</section>
+
+					<section>
+						<h2 class="black">Future-resilient architecture</h2>
+						<h3>Leverage modern features</h3>
+					</section>
+
+					<section>
+						<h2 class="black">Allows to make right decision fast</h2>
+						<h3>But doesn't tie you in to it forever</h3>
+					</section>
+
+					<section>
+						<h2 class="black">Isolate developers from the bad and broken parts of the platform</h2>
+						<h3>Providing good abstraction where required</h3>
+					</section>
+
+				</section>
+
+				<section>
+					<section data-state="digital-green" class="navigate-down">
+						<h1>Common architecture mistakes</h1>
+					</section>
+					<section>
+						<h2 class="black">Follow the crowd</h2>
+						<h3>when choosing a framework</h3>
+						<img src="images/popular.jpg" alt="" class="pc100" />
+					</section>
+					<section>
+						<h2 class="black">A limited test drive</h2>
+						<h3>doesn't push the limits of a framework</h3>
+					</section>
+					<section>
+						<h2 class="black">Too agile</h2>
+						<h3>skipping the design phase</h3>
+					</section>
+					<section>
+						<h2 class="black">Front-End architecture</h2>
+						<h3>as an afterthought</h3>
+					</section>
+					<section>
+						<h2 class="black">The paradox of choice</h2>
+					</section>
+				</section>
+				<section>
+					<section data-state="digital-green" class="navigate-down">
+						<h1>Solution?</h1>
+					</section>
+					<section>
+						<img src="images/mexican.jpg" alt="" class="pc100" />
+					</section>
+					<section>
+						<h2 class="black">All valid choices</h2>
+						<h3>it all depends on the task</h3>
+						<ul>
+							<li class="fragment roll-in">Angular</li>
+							<li class="fragment roll-in">Backbone</li>
+							<li class="fragment roll-in">Ember</li>
+							<li class="fragment roll-in">Flight</li>
+							<li class="fragment roll-in">Knockout</li>
+							<li class="fragment roll-in">Polymer</li>
+							<li class="fragment roll-in">React</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Start comparing apples to apples</h2>
+						<img src="images/frameworks.jpg" alt="" class="pc100" />
+					</section>
+					<section>
+						<h2>More things to consider</h2>
+						<ul>
+							<li class="fragment roll-in">I18n</li>
+							<li class="fragment roll-in">A11y</li>
+							<li class="fragment roll-in">Authorisation</li>
+							<li class="fragment roll-in">3rd party integrations</li>
+							<li class="fragment roll-in">Data validation</li>
+							<li class="fragment roll-in">ORM</li>
+							<li class="fragment roll-in">Team expertise</li>
+						</ul>
+					</section>
+					<section>
+						<h3 class="black">Understanding pain points</h3>
+						<h2>is critical</h2>
+					</section>
+				</section>
+
+				<section data-state="digital-black">
+					<h1>Thank you</h1>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'concave', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+
+	</body>
+</html>
