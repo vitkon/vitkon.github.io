@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>JavaScript Trends 2015</title>
+
+        <meta name="description" content="JavaScript Trends 2015">
+        <meta name="author" content="Vitaly Kondratiev">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.min.css">
+        <link rel="stylesheet" href="css/theme/digital.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section data-state="digital-black">
+                    <img src="images/lunch-n-learn.jpg" alt="" class="pc100" />
+                </section>
+                <section data-state="digital-black">
+                    <h1>JavaScript<br/>Trends<br/>2015</h1>
+                    <p>
+                        <small>Vitaly Kondratiev<br/>
+                        January 2015<br/>
+                        <a href="http://twitter.com/vitkon">@vitkon</a></small>
+                    </p>
+                </section>
+                <section>
+                    <section data-background="#F0DB4F" class="navigate-down">
+                        <h1 class="black">ES6</h1>
+                        <aside class="notes">
+                            With ES6 it will become easier to write and support large scale js apps.
+                        </aside>
+                    </section>
+                    <section>
+                        <h2>Ecmascript evolution</h2>
+                        <img src="images/es_history0.png" alt="" class="pc100" />
+                    </section>
+                    <section>
+                        <h2>Ecmascript evolution</h2>
+                        <img src="images/es_history.png" alt="" class="pc100" />
+                    </section>
+
+                    <section>
+                        <h2>New features include:</h2>
+                        <ul>
+                            <li class="fragment roll-in">Arrow functions</li>
+                            <li class="fragment roll-in">Scoping / Destructing / Parameters</li>
+                            <li class="fragment roll-in">Iteration &amp; Generators</li>
+                            <li class="fragment roll-in">Collections</li>
+                            <li class="fragment roll-in">Modularity / Classes / Templates</li>
+                            <li class="fragment roll-in">API improvements</li>
+                            <li class="fragment roll-in">Proxies</li>
+                            <li class="fragment roll-in">and much more...</li>
+                        </ul>
+                        <aside class="notes">
+                            Full list here: https://github.com/lukehoban/es6features
+                        </aside>
+                    </section>
+                    <section>
+                        <h2>What to expect</h2>
+                        <ul>
+                            <li>ES6 release is planned for 2015</li>
+                            <li>Full spec support by modern browsers</li>
+                            <li>Wider adoption by community and frameworks</li>
+                        </ul>
+
+                    </section>
+                    <section>
+                        <img src="images/ie_support.png" alt="" class="pc100" />
+                    </section>
+                    <section>
+                        <h2>Module example</h2>
+                        <pre><code>
+
+    /* lib/math.js */
+    export function sum (x, y) {
+        return x + y;
+    }
+    export var pi = 3.141593;
+
+
+    /* app.js */
+    module math from 'lib/math';
+    alert('2π = ' + math.sum(math.pi, math.pi));
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Class example</h2>
+                        <pre><code>
+
+    class Person {
+        constructor(name, age) {
+            this.name = name;
+            this.age = age;
+        }
+    }
+
+    class Developer extends Person {
+        constructor(name, age, ...languages) {
+            super(name, age);
+            this.languages = [...languages];
+        }
+    }
+
+    let me = new Developer('John', 24, 'ES5', 'ES6');
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Useful Links</h2>
+                        <br/>
+                        <p>
+                            <h3 class="black">ES6 Features</h3>
+                            <a href="https://github.com/lukehoban/es6features">https://github.com/lukehoban/es6features</a>
+                        </p><br/>
+                        <p>
+                            <h3 class="black">ES6 Compatibility</h3>
+                            <a href="http://kangax.github.io/compat-table/es6">http://kangax.github.io/compat-table/es6</a>
+                        </p><br/>
+                        <p>
+                            <h3 class="black">Understanding EcmaScript6 (N. Zackas)</h3>
+                            <a href="https://leanpub.com/understandinges6/read">https://leanpub.com/understandinges6/read</a>
+                        </p>
+                    </section>
+
+                </section>
+                <section>
+                    <section data-state="digital-green" class="navigate-down">
+                        <h1>Typed Script</h1>
+                    </section>
+                    <section>
+                        <h2>Why?</h2>
+                            <ul>
+                                <li>You get more errors at compile time. Early errors are good, faster than running unit tests.<br/><br/></li>
+                                <li>Helps IDEs with auto-completion, helps exploring API<br/><br/></li>
+                                <li>Type annotations are useful for documenting parts of an API<br/><br/></li>
+                                <li>Checking and documenting types helps large teams collaborate<br/><br/></li>
+                                <li>Make it more palatable for Java devs</li>
+                            </ul>
+                    </section>
+                    <section>
+                        <h2>Microsoft TypeScript</h2>
+                        <img src="images/ts.png" alt="" style="position: absolute; top: 0px; right: 0px; width: 127px" />
+                        <ul>
+                            <li>Subset of ECMAScript 6 plus optional static typing</li>
+                            <li>Type annotations / Interfaces / Visibility modifiers</li>
+                            <li>Allows you to provide static type information for existing (untyped) code via external files, which have the file name extension .d.ts.<br/><br/>
+                            d.ts for popular libraries — <a href="http://definitelytyped.org/">http://definitelytyped.org</a>
+                            </li>
+                        </ul><br/><br/>
+
+                        <pre><code>
+    function add(x : number, y : number) : number {
+        return x + y;
+    }
+
+    add('a', 'b'); // compiler error
+                        </code></pre>
+
+                    </section>
+                    <section>
+                        <h2>Facebook Flow</h2>
+                        <img src="images/flow.png" alt="" style="position: absolute; top: 0px; right: 0px; width: 127px" />
+                        <ul>
+                            <li>Type checker for ECMAScript 6 that is based on flow analysis</li>
+                            <li>Type annotation syntax compatible with TypeScript</li><li>Flow can infer more types, which means that it is more useful for existing (completely unannotated) code bases</li>
+                            <li>Allows to gradually evolve your existing codebase into typed</li>
+                            <li>Supports React's JSX</li>
+                        </ul>
+                        <br/><br/>
+                        <pre><code>
+    /* @flow */
+    function foo(x) {
+      return x * 10;
+    }
+    foo('Hello, world!'); // error here
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Google AtScript</h2>
+                        <ul>
+                            <li>Type annotations for variables, parameters and properties</li>
+                            <li>Type annotation syntax compatible with TypeScript</li>
+                            <li>Meta-data annotations (which are called “annotations” in Java and “decorators” in Python)</li>
+                            <li>AtScript — Preferred way to code AngularJS 2.0</li>
+                            <li>In contrast to TypeScript and Flow, both data is available at runtime</li>
+                        </ul>
+                        <pre><code>
+    class MyClass {
+        methodA(name : string) : int {
+            var length : int = name.length;
+            return length;
+        }
+    }
+                        </pre></code>
+                    </section>
+                    <section>
+                        <h2>A common standard?</h2>
+                        <p class="align-left">The teams of TypeScript, Flow and AtScript seem eager to collaborate.</p><br/><br/>
+                        <h2 class="black">Expectations for typed JS</h2>
+                        <ul>
+                            <li>Runtime type checking</li>
+                            <li>Static type checking: IDE support</li>
+                            <li>ECMAScript proposal</li>
+                            <li>Browser support</li>
+                            <li>ECMAScript standard</li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section data-state="digital-green" class="navigate-down">
+                        <h1>Cross-platform</h1>
+                    </section>
+                    <section>
+                        <h2>Desktop, Mobile and more</h2>
+                        <img src="images/x-platform.jpg" alt="" class="pc100" />
+                    </section>
+                    <section>
+                        <h2>Website as a Web App</h2>
+                        <br/>
+                        <ul>
+                            <li>Controlled access to device hardware and functionality</li>
+                            <li>Offline mode</li>
+                            <li>Native UI elements integration</li>
+                            <li>Push notifications</li>
+                        </ul>
+
+                    </section>
+
+                </section>
+
+                <section>
+                    <section data-state="digital-green" class="navigate-down">
+                        <h1>Native</h1>
+                    </section>
+                    <section>
+                        <h2>Native JS has arrived</h2><br/><br/>
+                        <ul>
+                            <li>Apache Cordova is native for Windows platform<br/><br/></li>
+                            <li>Firefox OS, Smart TVs (LG with Open WebOS) and gaming platforms (XBox One)<br/><br/></li>
+                            <li>JS for automation in OSX Yosemite<br/><br/></li>
+                            <li>WKWebView with Nitro JS engine runs as fast as Safari in iOS8<br/><br/></li>
+                            <li>Seamless integration Java-JavaScript via Java 8 Nashorn<br/></li>
+                        </ul>
+
+                    </section>
+                </section>
+                <section>
+                    <section data-state="digital-green" class="navigate-down">
+                        <h1>Device API</h1>
+                    </section>
+                    <section>
+                        <h2>Extending web stack possibilities</h2>
+                        <ul>
+                            <li>Geolocation</li>
+                            <li>Vibration</li>
+                            <li>Battery status</li>
+                            <li>Sensors (ambient light sensor, accelerometer)</li>
+                            <li>Camera and Mic</li>
+                            <li>etc</li>
+                        </ul>
+                        <aside class="notes">
+                            Will take a few years to catch up
+                        </aside>
+                    </section>
+                    <section>
+                        <h2>What to expect</h2>
+                        <ul>
+                            <li>It will take a few year to fully implement it</li>
+                            <li>Feature detection and progressive enhancement FTW</li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section data-state="digital-green" class="navigate-down">
+                        <h1>Fighting Complexity</h1>
+                    </section>
+                    <section>
+                        <img src="images/mexican.jpg" alt="" class="pc100" />
+                    </section>
+                    <section>
+                        <h2 class="black">Frameworks sometimes help to&nbsp;decrease complexity</h2>
+                        <ul>
+                            <li>Angular (Google)</li>
+                            <li>Backbone</li>
+                            <li>Ember</li>
+                            <li>Flight (Twitter)</li>
+                            <li>Knockout (Microsoft)</li>
+                            <li>Polymer (Google)</li>
+                            <li>React (Facebook)</li>
+                        </ul>
+                        <br/><br/>
+                        <p>Big boys dominating the market</p>
+                        <aside class="notes">
+                            Big companies exposing their engineering experience in frameworks as well as creating some marketing levers to change the market.
+
+                            Modularity is here to stay.
+                        </aside>
+                    </section>
+                    <section>
+                        <h2>What to expect</h2>
+                        <ul>
+                            <li>As we gain experience we might rethink our ways of doing things. React and Angular 2.0 is a good example<br/><br/></li>
+                            <li>Complex solution require language extensions and advanced tooling (Modules, typed script, build)<br/><br/></li>
+                            <li>Compatibility and iteroperability between frameworks, modules and libraries (Npm, Browserify)<br/><br/></li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section data-state="digital-green" class="navigate-down">
+                        <h1>Web Components</h1>
+                    </section>
+                    <section>
+                        <h2>4 Core Elements</h2>
+                        <ul>
+                            <li>Custom Elements</li>
+                            <li>Templates</li>
+                            <li>Shadow DOM</li>
+                            <li>Imports</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Browser Support</h2>
+                        <p>
+                            <ul>
+                                <li>Chrome — full</li>
+                                <li>Firefox — partial</li>
+                                <li>Safari — none, in the roadmap</li>
+                                <li>IE — none, in the roadmap</li>
+                            </ul>
+                        </p>
+
+                    </section>
+                    <section>
+                        <h2>Custom element with Polymer</h2>
+                        <br/><br/>
+                        <pre><code>
+    <polymer-element name="hello-world" attributes="who">
+      <template>
+        <p>Hello <strong>{{who}}</strong></p>
+        <content></content>
+      </template>
+      <script>
+        Polymer('hello-world', {
+          who: 'World'
+        });     
+      </script>
+    </polymer-element>
+    
+    <hello-world></hello-world>
+                        </code></pre>
+
+
+                    </section>
+                    <section>
+                        <h2>What to expect</h2>
+                        <ul>
+                            <li>Full implementation of Web Components recommendation in the browsers</li>
+                            <li>Adoption of Web Components standard by frameworks</li>
+                            <li>New ways of building and testing for the web</li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section data-state="digital-green" class="navigate-down">
+                        <h1>Package Management</h1>
+                    </section>
+                    <section>
+                        <h2>Node.js leaderboard</h2>
+                        <ul>
+                            <li>npm - commonJS modules</li>
+                            <li>bower - front-end packages</li>
+                            <li>grunt - de-facto build tool</li>
+                            <li>gulp - lean competitor of grunt</li>
+                            <li>browserify - dependency management and loader</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>What to expect</h2><br/><br/>
+                        <ul>
+                            <li>Adoption of package management tools for enterprise. (Latest hybris storefront has grunt build tool in place)<br/><br/></li>
+                            <li>Package management as a manadatory part of a web app<br/><br/></li>
+                            <li>Visual UIs for build tools (Gulpfiction)<br/><br/></li>
+                            <li>More generators like Yeoman to ease the startup configuration<br/><br/></li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section data-state="digital-green" class="navigate-down">
+                        <h1>3D Graphics</h1>
+                    </section>
+                    <section>
+                        <h2>WebGL maturity</h2><br/><br/>
+                        <p>WebGL became mature in terms of security and browser support</p><br/><br/>
+
+                        <h2>WebGL libraries</h2>
+                        <ul>
+                            <li>Three.js<br/><br/></li>
+                            <li>Babylon.js<br/><br/></li>
+                            <li>D3 for infographics<br/><br/></li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>What to expect</h2><br/><br/>
+                        <ul>
+                            <li>Virtual Reality in the browser<br/><br/></li>
+                            <li>New media formats<br/><br/></li>
+                            <li>Evolution of animation tools within web stack</li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section data-state="digital-green" class="navigate-down">
+                        <h1>Games</h1>
+                    </section>
+                    <section>
+                        <h2>Gaming engines evolution</h2>
+                        <p><a href="http://unity3d.com">http://unity3d.com</a> — a browser 3D game without plug-ins</p><br/><br/>
+                        <h2>What to expect</h2>
+                        <ul>
+                            <li>3D game engines based on JS/WebGL</li>
+                            <li>Social networks as a delivery channel for games</li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section data-state="digital-green" class="navigate-down">
+                        <h1>Server-side JS</h1>
+                    </section>
+                    <section>
+                        <h2>Node.js in Enterprise</h2>
+                        <ul>
+                            <li>Paypal released <a href="http://krakenjs.com/">Kraken</a><br/><br/></li>
+                            <li>Walmart came up with <a href="http://hapijs.com/">Hapi</a><br/><br/></li>
+                            <li>Apodtion is enterprise is incresing — LinkedIn, Yahoo, Paypal, Walmart are the early adopters. More to follow.<br/><br/></li>
+                            <li>Node.js apodtion increases, Ruby is on decline</li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section data-state="digital-green" class="navigate-down">
+                        <h1>Internet of Things</h1>
+                    </section>
+                    <section>
+                        <h2>Johnny five — JS Robotics</h2>
+                        <iframe width="640" height="390" src="https://www.youtube.com/embed/oxHW6sVNzpk" frameborder="0" allowfullscreen></iframe>
+                    </section>
+                    <section>
+                        <h2>Tessel</h2>
+                        <img src="images/tessel.jpg" alt="" class="pc100" />
+                    </section>
+                    <section>
+                        <h2>Cylon.js</h2>
+                        <img src="images/cylon.png" alt="" style="width: 700px" />
+                    </section>
+                    <section>
+                        <h2>JS controlled Shero!</h2>
+                        <img src="images/sphero.jpg" alt="" class="pc100" />
+                    </section>
+                </section>
+
+                <section data-state="digital-black">
+                    <h1>Thank you</h1>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'concave', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Parallax scrolling
+                // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+                // parallaxBackgroundSize: '2100px 900px',
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
