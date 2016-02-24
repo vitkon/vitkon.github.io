@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Functional JavaScript Workshop</title>
+
+        <meta name="description" content="JavaScript Trends 2015">
+        <meta name="author" content="Vitaly Kondratiev">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.min.css">
+        <link rel="stylesheet" href="css/theme/digital.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section data-state="digital-black">
+                    <img src="images/lunch-n-learn.jpg" alt="" class="pc100" />
+                </section>
+                <section data-state="digital-black">
+                    <h1>Functional JavaScript</h1>
+                    <p>
+                        <small>Vitaly Kondratiev<br/>
+                        February 2016<br/>
+                        <a href="http://twitter.com/vitkon">@vitkon</a></small>
+                    </p>
+                    <aside class="notes">
+                        FP is first paradigm being invented (1957, before OO, before structured) and last to be adopted, oddly.
+                        Memory was too expensive to make it practical.
+                    </aside>
+                </section>
+                <section>
+                    <section data-background="#F0DB4F" class="navigate-down">
+                        <h1 class="black">Why functional?</h1>
+                        <aside class="notes">
+                        </aside>
+                    </section>
+                    <section>
+                        <h2>Definition</h2><br>
+                        <p>Pure function is a function where return values are only determined by the input values, <br><span class="black">without observable side effects</span></p>
+                        <br/><br/>
+                        <pre class="fragment roll-in"><code>
+    expect(f(x)).toBe(f(x)); //no matter what!
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Zen Buddist Koan</h2><br/><br/>
+                        <p class="black fragment roll-in">If a program has no observable side effects,</p>
+                        <p class="black fragment roll-in">does it even run?</p>
+                        <aside class="notes">
+                        </aside>
+                    </section>
+                    <section>
+                        <h2>Symptoms (code smells)</h2><br/>
+                        <ul>
+                            <li class="fragment roll-in">Custom names</li>
+                            <li class="fragment roll-in">Looping patterns</li>
+                            <li class="fragment roll-in">Glue code</li>
+                            <li class="fragment roll-in">Side effects</li>
+                        </ul>
+                        <aside class="notes">
+                        </aside>
+                    </section>
+                    <section>
+                        <h2>Purity benefits</h2>
+                        <ul>
+                            <li>testable</li>
+                            <li>portable</li>
+                            <li>memoizable</li>
+                            <li>parallelizable</li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section data-state="digital-green" class="navigate-down">
+                        <h1>Higher-Order Functions</h1>
+                    </section>
+                    <section>
+                        <h2>Higher-order function</h2>
+                            <br/>
+                            <p>A HOF is a function that does at least one of the following:</p><br/>
+                            <ul>
+                                <li class="black">Takes one or more functions as an input</li>
+                                <li class="black">Outputs a function</li>
+                            </ul>
+                            <br/><br/>
+                            <p class="fragment roll-in">All the rest are first order functions</p>
+                    </section>
+                    <section>
+                        <pre><code style="max-height: 600px">
+    var beers = [
+        {
+            name: 'Doombar',
+            category: 'ale',
+            origin: 'England',
+            volume: 4,
+            draft: true
+        },
+        {
+            name: 'Kronenbourg',
+            category: 'lager',
+            origin: 'France',
+            volume: 6.7,
+            draft: true
+        },
+        {
+            name: 'Peroni',
+            category: 'lager',
+            origin: 'Italy',
+            volume: 5.1,
+            draft: false,
+            size: 330
+        }
+    ];
+                        </code></pre>
+
+                    </section>
+                    <section>
+                        <h2>All draft beer</h2>
+                        <p><a href="https://jsbin.com/keduqoluge/2/edit?js,console">https://jsbin.com/keduqoluge/2/edit?js,console</a></p>
+                        <pre class="fragment roll-in"><code>
+    let allDrafts = [];
+    for (let i = 0, beersLength = beers.length; i < beersLength; i++) {
+        if (beers[i].draft) {
+            allDrafts.push(beers[i]);
+        }
+    }
+                        </code></pre>
+                        <p class="fragment roll-in">VS</p>
+                        <pre class="fragment roll-in"><code>
+    const allDrafts = beers.filter( beer => beer.draft );
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Is it bottled?</h2>
+                        <p><a href="https://jsbin.com/tilasumixu/1/edit?js,console">https://jsbin.com/tilasumixu/1/edit?js,console</a></p>
+                        <pre class="fragment roll-in"><code>
+    let bottledBeers = [];
+    for (let i = 0, beersLength = beers.length; i < beersLength; i++) {
+        bottledBeers.push({
+            name: beers[i].name,
+            isBottled: !beers[i].draft
+        });
+    }
+                        </code></pre>
+                        <p class="fragment roll-in">VS</p>
+                        <pre class="fragment roll-in"><code>
+    const bottledBeers = myBeers.map( beer => {
+        return {name: beer.name, isBottled: !beer.draft}
+    });
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Has Ales?</h2>
+                        <p><a href="https://jsbin.com/wamunijeto/1/edit?js,console">https://jsbin.com/wamunijeto/1/edit?js,console</a></p>
+                        <pre class="fragment roll-in"><code>
+    let hasAles = false;
+    for (let i = 0, beersLength = beers.length; i < beersLength; i++) {
+        if (beers[i].category === 'ale') {
+            hasAles = true;
+            break;
+        }
+    }
+                        </code></pre>
+                        <p class="fragment roll-in">VS</p>
+                        <pre class="fragment roll-in"><code>
+    const hasAles = beers.some( beer => beer.category === 'ale');
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Average lager volume</h2>
+                        <p><a href="https://jsbin.com/copufipuno/1/edit?js,console">https://jsbin.com/copufipuno/1/edit?js,console</a></p>
+                        <pre class="fragment roll-in"><code>
+    let totalVolume = 0;
+    let lagerCount = 0;
+    for (let i = 0, beersLength = beers.length; i < beersLength; i++) {
+        if (beers[i].category === 'lager') {
+            lagerCount++;
+            totalVolume += beers[i].volume;
+        }
+    }
+    const avgLagerVolume = totalVolume / lagerCount;
+                        </code></pre>
+                        <p class="fragment roll-in">VS</p>
+                        <pre class="fragment roll-in"><code>
+    const lagers = beers.filter( beer => beer.category === 'lager');
+    const avgLagerVolume = lagers.reduce(
+        (prev, curr) => (prev + curr.volume), 0
+    ) / lagers.length;
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Check out these HOC</h2>
+                        <ul>
+                            <li>.every()</li>
+                            <li>.some()</li>
+                            <li>.map()</li>
+                            <li>.reduce()</li>
+                            <li>.filter()</li>
+                            <li>.sort()</li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section data-state="digital-green" class="navigate-down">
+                        <h1>Partial Application</h1>
+                    </section>
+                    <section>
+                        <h2>Definition</h2><br/>
+                        <p>Giving a function fewer arguments than it expects<br/>is typically called <span class="black">partial application</span>.</p>
+                        <br/>
+                        <p>Partially applying a function can remove<br/>a lot of boilerplate code.</p>
+                        <br/>
+                    </section>
+                    <section>
+                        <h2>Extended console.log</h2>
+                        <p>Prefix console.log with a namespace</p>
+                        <br/>
+                        <pre class="fragment roll-in"><code>
+    const log = (namespace) => console.log.bind(null, namespace);
+    const info = log('INFO:');
+    info('this is an extended console.log');
+                        </code></pre>
+
+                    </section>
+                    <section>
+                        <h2>Currying</h2>
+                        <p><a href="https://jsbin.com/xebuxemivi/1/edit?js,console">https://jsbin.com/xebuxemivi/1/edit?js,console</a></p>
+                        <p>You can call a function with fewer arguments than it expects. It returns a function that takes the remaining arguments.</p>
+                        <br/>
+                        <pre class="fragment roll-in"><code>
+    const get = _.curry(
+        (param, object) => object[param]
+    );
+                        </code></pre>
+                        <br/>
+                        <pre class="fragment roll-in"><code>
+    const getBeerName = get('name');
+                        </code></pre>
+                        <br/>
+                        <pre class="fragment roll-in"><code>
+    const beerNames = beers => beers.map(getBeerName);
+                        </code></pre>
+
+                        <aside class="notes">
+                            There are certain things one can live without until one aquires them. For me currying is on the list.
+                        </aside>
+
+                    </section>
+
+                </section>
+
+                <section>
+                    <section data-state="digital-green" class="navigate-down">
+                        <h1>Composition</h1>
+                    </section>
+                    <section>
+                        <h2>Composition</h2>
+                        <img src="images/compose.png" alt="" class="pc100" />
+                    </section>
+                    <section>
+                        <h2>Make me shout</h2>
+                        <p><a href="https://jsbin.com/vocawijutu/1/edit?js,console">https://jsbin.com/vocawijutu/1/edit?js,console</a></p>
+                        <pre class="fragment roll-in"><code>
+    const _ = require('lodash');
+
+    const toUpperCase = x => x.toUpperCase();
+    const exclaim = x => `${x}!`;
+                        </code></pre>
+                        <pre class="fragment roll-in"><code>
+    const shout = _.flow(
+        toUpperCase,
+        exclaim
+    );
+                        </code></pre>
+                        <pre class="fragment roll-in"><code>
+
+    console.log(
+        shout('moar beer'); // => MOAR BEER!
+    );
+                        </code></pre>
+                    </section>
+                </section>
+                <section>
+                    <section data-state="digital-green" class="navigate-down">
+                        <h1>Useful resources</h1>
+                    </section>
+                    <section>
+                        <h2>Books</h2><br/>
+                        <ul>
+                            <li>Functional JavaScript</li><br/>
+                            <li>Most Adequate Guide to Functional Programming</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Libraries</h2><br/>
+                        <ul>
+                            <li>ramda</li><br/>
+                            <li>lodash-fp</li><br/>
+                            <li>lodash</li><br/>
+                            <li>underscore</li><br/>
+                            <li>lazy.js</li><br/>
+                        </ul>
+                        <aside class="notes">
+                        </aside>
+                    </section>
+                </section>
+                <section data-state="digital-black">
+                    <h1>Thank you</h1>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'concave', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Parallax scrolling
+                // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+                // parallaxBackgroundSize: '2100px 900px',
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,122 @@
+/**
+ * DD theme for reveal.js.
+ * Author: VK
+ */
+
+
+// Default mixins and settings -----------------
+@import "../template/mixins";
+@import "../template/settings";
+// ---------------------------------------------
+
+
+
+// Include theme-specific fonts
+@font-face {
+	font-family: "League Gothic";
+	src: url('../../lib/font/league_gothic-webfont.eot');
+	src: url('../../lib/font/league_gothic-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('../../lib/font/league_gothic-webfont.woff') format('woff'),
+		 url('../../lib/font/league_gothic-webfont.ttf') format('truetype'),
+		 url('../../lib/font/league_gothic-webfont.svg#LeagueGothicRegular') format('svg');
+
+	font-weight: normal;
+	font-style: normal;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
+
+/**
+ * Digital colors by VK
+ */
+html * {
+	color-profile: sRGB;
+	rendering-intent: auto;
+}
+
+// Solarized colors
+$base03:    #FFF;
+$base02:    #073642;
+$base01:    #586e75;
+$base00:    #657b83;
+$base0:     #839496;
+$base1:     #93a1a1;
+$base2:     #eee8d5;
+$base3:     #fdf6e3;
+$yellow:    #b58900;
+$orange:    #cb4b16;
+$red:       #dc322f;
+$magenta:   #d33682;
+$violet:    #6c71c4;
+$blue:      #268bd2;
+$cyan:      #2aa198;
+$green:     #79b000;
+$grey: 		#EBEDEE;
+
+// Override theme settings (see ../template/settings.scss)
+$mainColor: $base1;
+$headingColor: $green;
+$headingTextShadow: none;
+$backgroundColor: $base03;
+$linkColor: $green;
+$linkColorHover: lighten( $linkColor, 20% );
+$selectionBackgroundColor: $magenta;
+
+
+
+// Theme template ------------------------------
+@import "../template/theme";
+// ---------------------------------------------
+
+
+a {
+	text-decoration: underline !important;
+}
+
+/*********************************************
+ * SPECIAL SLIDES
+ *********************************************/
+
+img {
+	border: none !important;
+	box-shadow: none !important;
+}
+
+.align-left {
+	text-align: left !important;
+}
+
+.highlight {
+	color: #000 !important;
+}
+
+.underline {
+	text-decoration: underline;
+}
+
+sup {
+	color: #000;
+}
+
+.digital-black {
+	& body { background-color: #000; }
+}
+
+.digital-green {
+	& body { background-color: $green }
+
+	.navigate-right { border-left-color: #fff !important};
+	.navigate-left { border-right-color: #fff !important};
+	.navigate-up { border-bottom-color: #fff !important};
+	.navigate-down { border-top-color: #fff !important};
+}
+
+.digital-black, .digital-green {
+ 	& h1, p {
+ 		color: #FFF;
+ 	}
+
+
+
+
+ }
